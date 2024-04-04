@@ -1,0 +1,33 @@
+<h1>All Products</h1>
+
+{{#if notebooks.length}}
+  <div class="content_notebook">
+    {{#each notebooks}}
+      <div class="card">
+        <div class="card-image">
+          <img src="{{img}}" title="{{title}}" />
+        </div>
+        <div class="card-content">
+          <span class="card-title">{{title}}</span>
+          <p>{{descr}}</p>
+          <b class="price">{{price}}</b>
+        </div>
+        <div class="card-action actions">
+          <a href="/notebooks/{{id}}" target="_blank">Detail</a>
+          {{! query search  }}
+          {{#if @root.isAuth}}
+             {{#ifeq userId._id @root.userId}} 
+              <a href="/notebooks/{{id}}/edit?allow=true">Edit</a>
+            {{/ifeq}}
+            <form action="/cart/add" method="POST">
+              <input type="hidden" name="id" value="{{id}}" />
+              <button type="submit" class="btn btn-primary">Buy</button>
+            </form>
+          {{/if}}
+        </div>
+      </div>
+    {{/each}}
+  </div>
+{{else}}
+  <b>Products empty</b>
+{{/if}}
